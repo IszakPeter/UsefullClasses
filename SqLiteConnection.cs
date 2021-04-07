@@ -157,7 +157,7 @@
         
         public string[] GetTables() => ArrayQuery("SELECT name FROM sqlite_master WHERE type = 'table' AND name NOT LIKE 'sqlite_%'; ");
         
-        public string[] GetColumns(string table) => ArrayQuery($"PRAGMA table_info({table})");
+        public string[] GetColumns(string table) => QueryList($"PRAGMA table_info({table})").Select(_=>_[1]).ToArray();
 
         public void Disconect() => connection.Close();
     }
