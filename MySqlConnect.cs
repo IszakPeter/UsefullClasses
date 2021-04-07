@@ -126,5 +126,9 @@ public class MySqlConnect
                 return t;
             }
         }
+        
+        public List<List<string>> GetColumns(string table) =>
+            QueryList($"SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = N'{table}'");
+
 
     }

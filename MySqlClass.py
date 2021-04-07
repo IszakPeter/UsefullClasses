@@ -30,5 +30,11 @@ class MySqlConnector:
     def SetDatabase(self,db):
         self.cursor.execute(f'Use `{db}`;')
 
-
-
+    def GetColumns(self, x):
+        sql = f"""SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = N'{x}' """
+        try:
+            self.cursor.execute(sql)
+            return self.cursor.fetchall()
+        except Exception as e:
+            print(e)
+            return e

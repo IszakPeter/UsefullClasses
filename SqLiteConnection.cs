@@ -154,7 +154,10 @@
                 return -1;
             }
         }
+        
         public string[] GetTables() => ArrayQuery("SELECT name FROM sqlite_master WHERE type = 'table' AND name NOT LIKE 'sqlite_%'; ");
         
+        public string[] GetColumns(string table) => ArrayQuery($"PRAGMA table_info({table})");
+
         public void Disconect() => connection.Close();
     }
