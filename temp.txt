@@ -1,0 +1,8 @@
+//  0: döntetlen; 1: az oszlopban lévő üt; 2: sorban lévő üt 
+
+  k p o g s 
+k 0 2 1 1 2
+p 1 0 2 2 2
+o 2 1 0 1 2
+g 2 1 2 0 1
+s 1 1 1 2 0
