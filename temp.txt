@@ -6,3 +6,35 @@ p 1 0 2 2 2
 o 2 1 0 1 2
 g 2 1 2 0 1
 s 1 1 1 2 0
+
+
+
+
+
+
+
+
+
+
+
+ public static string GetMethods(Type type)
+        {
+            string GetParameters(MethodInfo mi) =>
+                string.Join(",", mi.GetParameters().Select(_ => $"{_.ParameterType.Name} {_.Name}"));
+            var methods = type.GetMethods()
+                .Select(_ => $"{_.DeclaringType.Name} {_.Name}({GetParameters(_)})");
+            return string.Join("\r\n\t", methods);
+        }
+        public static string GetProperties(Type type)
+        {
+            var methods = type.GetProperties()
+                .Select(_ => $"{_.DeclaringType.Name} {_.Name}");
+            return string.Join("\r\n\t", methods);
+        }
+        public static Type[] GetClasses(string @namespace)
+        {
+            return AppDomain.CurrentDomain.GetAssemblies()
+                       .SelectMany(t => t.GetTypes())
+                       .Where(t => t.IsClass && t.Namespace == @namespace).ToArray();
+        }
+

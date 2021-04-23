@@ -126,9 +126,16 @@ public class MySqlConnect
                 return t;
             }
         }
-        
-        public List<List<string>> GetColumns(string table) =>
-            QueryList($"SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = N'{table}'");
-
+        public string[] GetColumns(string table)
+                            => Query($"SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = N'{table}'").ToArray();
+                            
+        public string[] GetTables(string database) =>
+            Query($@" select table_name
+                    from information_schema.tables
+                    where table_type = 'BASE TABLE'
+    	                    and table_schema not in ('information_schema','mysql','performance_schema','sys')
+   	                    AND table_schema='{database}'
+                    order by table_name;
+                    ").ToArray();
 
     }
