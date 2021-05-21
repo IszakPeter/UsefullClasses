@@ -40,22 +40,3 @@ s 1 1 1 2 0
 
 
 
-            var temp = new List<dynamic>();
-            temp.Clear();
-            File.ReadAllLines("eredmenyek.txt")
-                .Select(_ => _.Split(' '))
-                .Select(_=>new {nev1=_[0],nev2=_[1], eredmeny=int.Parse(_[2]) })
-                .ToList().ForEach(x=>{
-                    temp.Add(new { nev = x.nev1, state = x.eredmeny == 2 ? -1 : x.eredmeny });
-                    temp.Add(new { nev = x.nev2, state = x.eredmeny == 1 ? -1 : x.eredmeny/2 });
-                });
-            var temp2 = temp.GroupBy(_ => _.nev)
-                .Select(_ => new
-                {
-                    nev = _.Key,
-                    nyert = _.Count(__ => __.state == 1),
-                    vesztet = _.Count(__ => __.state == -1),
-                    dontetlen = _.Count(__ => __.state == 0)
-                });
-            Console.WriteLine(string.Join("\r\n",temp2)); 
-
